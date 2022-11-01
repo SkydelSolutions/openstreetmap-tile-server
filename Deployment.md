@@ -59,14 +59,11 @@ docker volume create osm-tiles
 ```
 
 # Build Tiles : 
+This container will stop once it is done.
 ```sh
 docker run -e THREADS=16 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -v /media/skydel/OSM/planet-latest.osm.pbf:/data/region.osm.pbf -v osm-data:/data/database/ osm import
 ```
 
-# Run Container :
-```sh
-docker run -p 8080:80 -v osm-data:/data/database/ -e ALLOW_CORS=enabled -v osm-tiles:/data/tiles/ -d osm run
-```
 
 # Modify Skydel config : 
 ```sh
@@ -85,9 +82,26 @@ nano /usr/lib/skydel-sdx/data/maps/earth/openstreetmap/openstreetmap.dgml
           <downloadUrl protocol="http" host="172.17.0.2" path="/tile/"/>
 ```
 
+# Run Container :
+```sh
+docker run -p 8080:80 -v osm-data:/data/database/ -e ALLOW_CORS=enabled -v osm-tiles:/data/tiles/ -d osm run
+```
+
 # Start Skydel
 ### Open Preferences / Marble Proxy
 ### Configure as follow
 - Address: 172.17.0.2
 - Transport Protocol : Http
 - Port : 80
+
+# Troubleshooting
+- Make sure you're using root.
+- Remount drive and restart docker
+```sh
+umount /media/skydel/OSM1
+umount /media/skydel/OSM
+mount /dev/sdb1 /media/skydel/OSM
+service docker stop
+systemctl daemon-reload
+service docker start
+```
