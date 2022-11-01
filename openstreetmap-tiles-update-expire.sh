@@ -58,8 +58,8 @@ RUNLOG=$LOG_DIR/run.log
 #------------------------------------------------------------------------------
 EXPIRY_MINZOOM=${EXPIRY_MINZOOM:="13"}
 EXPIRY_TOUCHFROM=${EXPIRY_TOUCHFROM:="13"}
-EXPIRY_DELETEFROM=${EXPIRY_DELETEFROM:="19"}
-EXPIRY_MAXZOOM=${EXPIRY_MAXZOOM:="20"}
+EXPIRY_DELETEFROM=${EXPIRY_DELETEFROM:="17"}
+EXPIRY_MAXZOOM=${EXPIRY_MAXZOOM:="18"}
 
 #*************************************************************************
 #*************************************************************************

@@ -152,8 +152,8 @@ docker run \
     -e UPDATES=enabled \
     -e EXPIRY_MINZOOM=13 \
     -e EXPIRY_TOUCHFROM=13 \
-    -e EXPIRY_DELETEFROM=19 \
-    -e EXPIRY_MAXZOOM=20 \
+    -e EXPIRY_DELETEFROM=17 \
+    -e EXPIRY_MAXZOOM=18 \
     -v osm-data:/data/database/ \
     -v osm-tiles:/data/tiles/ \
     -d overv/openstreetmap-tile-server \
