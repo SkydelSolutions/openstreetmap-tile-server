@@ -64,6 +64,12 @@ This container will stop once it is done.
 docker run -e THREADS=16 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -v /media/skydel/OSM/planet-latest.osm.pbf:/data/region.osm.pbf -v /media/skydel/OSM/planet.poly:/data/region.poly -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
 ```
 
+# Build Tiles Single Region:
+This container will stop once it is done.
+```sh
+docker run -e THREADS=16 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -e DOWNLOAD_PBF=https://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf -e DOWNLOAD_POLY=https://download.geofabrik.de/asia/israel-and-palestine.poly -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
+
+```
 
 # Modify Skydel config : 
 ```sh

@@ -40,15 +40,6 @@ if [ ! -f /data/style/mapnik.xml ]; then
     carto ${NAME_MML:-project.mml} > mapnik.xml
 fi
 
-if [ "$1" == "fix" ]; then
-    #Import external data
-    chown -R renderer: /home/renderer/src/ /data/style/
-    if [ -f /data/style/scripts/get-external-data.py ] && [ -f /data/style/external-data.yml ]; then
-        sudo -E -u renderer python3 /data/style/scripts/get-external-data.py -c /data/style/external-data.yml -D /data/style/data
-    fi
-    exit 0
-fi
-
 if [ "$1" == "import" ]; then
     # Ensure that database directory is in right state
     mkdir -p /data/database/postgres/
@@ -186,7 +177,6 @@ if [ "$1" == "run" ]; then
         sudo -u renderer touch /var/log/tiles/osmosis.log; tail -f /var/log/tiles/osmosis.log >> /proc/1/fd/1 &
         sudo -u renderer touch /var/log/tiles/expiry.log; tail -f /var/log/tiles/expiry.log >> /proc/1/fd/1 &
         sudo -u renderer touch /var/log/tiles/osm2pgsql.log; tail -f /var/log/tiles/osm2pgsql.log >> /proc/1/fd/1 &
-
     fi
 
     # Run while handling docker stop's SIGTERM
