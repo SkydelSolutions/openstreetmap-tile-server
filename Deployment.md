@@ -61,7 +61,7 @@ docker volume create osm-tiles
 # Build Tiles : 
 This container will stop once it is done.
 ```sh
-docker run -e THREADS=16 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -v /media/skydel/OSM/planet-latest.osm.pbf:/data/region.osm.pbf -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
+docker run -e THREADS=16 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -v /media/skydel/OSM/planet-latest.osm.pbf:/data/region.osm.pbf -v /media/skydel/OSM/planet.poly:/data/region.poly -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
 ```
 
 
