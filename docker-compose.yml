@@ -6,7 +6,7 @@ services:
     volumes:
       - osm-data:/data/database/
     ports:
-      - "80:80"
+      - "8080:80"
     command: "run"
 
 volumes:
