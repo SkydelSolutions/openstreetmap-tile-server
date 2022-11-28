@@ -37,13 +37,13 @@ docker run -e THREADS=32 -e "OSM2PGSQL_EXTRA_ARGS=-C 65536" -e "FLAT_NODES=enabl
 
 # Run the container :
 ```sh
-docker run -p 8080:80 -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ -d osm run
+docker run -p 80:80 -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ -d osm run
 ```
 
 # Modify Skydel config : 
 in order for the file server to work on client devices you need to update this configuration file on the clients.
 
-The IP should be the IP of the docker host machine.
+The IP should be the IP of the docker host.
 ```sh
 nano /usr/lib/skydel-sdx/data/maps/earth/openstreetmap/openstreetmap.dgml
 ```
@@ -70,4 +70,4 @@ C:\Program Files\Skydel\data\maps\earth\openstreetmap\openstreetmap.dgml
 ### Configure as follow
 - Address: 192.168.1.###
 - Transport Protocol : Http
-- Port : 8080
+- Port : 80
