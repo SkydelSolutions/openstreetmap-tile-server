@@ -12,7 +12,6 @@ docker volume create osm-data
 docker volume create osm-tiles
 ```
 
-
 # Option A: Import data for a Single Region:
 You can run this command again to download additional regions.
 
@@ -41,7 +40,6 @@ docker run -e THREADS=32 -e "OSM2PGSQL_EXTRA_ARGS=-C 65536" -e "FLAT_NODES=enabl
 docker run -p 8080:80 -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ -d osm run
 ```
 
-
 # Modify Skydel config : 
 in order for the file server to work on client devices you need to update this configuration file on the clients.
 
@@ -64,24 +62,12 @@ C:\Program Files\Skydel\data\maps\earth\openstreetmap\openstreetmap.dgml
 
 ### With : 
 ```xml
-          <downloadUrl protocol="http" host="192.168.1.##" path="/tile/"/>
+          <downloadUrl protocol="http" host="192.168.1.###" path="/tile/"/>
 ```
 
 # Start Skydel
 ### Open Preferences / Marble Proxy
 ### Configure as follow
-- Address: 192.168.1.##
+- Address: 192.168.1.###
 - Transport Protocol : Http
 - Port : 8080
-
-# Troubleshooting
-- Make sure you're using root.
-- Remount drive and restart docker
-```sh
-umount /media/skydel/OSM1
-umount /media/skydel/OSM
-mount /dev/sdb1 /media/skydel/OSM
-service docker stop
-systemctl daemon-reload
-service docker start
-```
