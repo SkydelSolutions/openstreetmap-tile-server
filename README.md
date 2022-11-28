@@ -5,7 +5,14 @@
 
 This container allows you to easily set up an OpenStreetMap PNG tile server given a `.osm.pbf` file. It is based on the [latest Ubuntu 18.04 LTS guide](https://switch2osm.org/serving-tiles/manually-building-a-tile-server-18-04-lts/) from [switch2osm.org](https://switch2osm.org/) and therefore uses the default OpenStreetMap style.
 
-## Setting up the server
+## About this fork
+
+This fork is a modified version to be used as a local map server with Skydel.
+You should use a dedicated machine to run this docker.
+To host the planet map you need at least 16 cores, 32Gb of Ram and 128Gb of SSD Storage.
+You can refer to the [Deployment Document](https://github.com/SkydelSolutions/openstreetmap-tile-server/blob/master/Deployment.md) to setup this docker quickly.
+
+## Setting up the server (Original procedure)
 
 First create a Docker volume to hold the PostgreSQL database that will contain the OpenStreetMap data:
 

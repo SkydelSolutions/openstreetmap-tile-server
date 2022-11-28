@@ -43,7 +43,7 @@ docker info
 
 # Build Container from repository :
 ```sh
-docker build https://github.com/Overv/openstreetmap-tile-server.git -t osm
+docker build https://github.com/SkydelSolutions/openstreetmap-tile-server.git -t osm
 ```
 
 # Create Volumes
@@ -52,23 +52,32 @@ docker volume create osm-data
 docker volume create osm-tiles
 ```
 
-# Build Tiles : 
+# Build Tiles For the entire planet: 
 This container will stop once it is done.
+
+**It will take a VERY long time to complete.**
+## Requires
+- 32 Thread
+- 64 GB of RAM
+- 1TB of SSD
 ```sh
-docker run -e THREADS=8 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -v /media/skydel/OSM/planet-latest.osm.pbf:/data/region.osm.pbf -v /media/skydel/OSM/planet.poly:/data/region.poly -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
+docker run -e THREADS=32 -e "OSM2PGSQL_EXTRA_ARGS=-C 65536" -e DOWNLOAD_PBF=https://planet.openstreetmap.org/pbf/planet-latest.osm.pbf -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
 ```
 
-# Build Tiles Single Region:
+# Build Tiles for a Single Region:
 This container will stop once it is done.
+You can run this command again to download additional regions.
 ```sh
 docker run -e THREADS=8 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -e DOWNLOAD_PBF=https://download.geofabrik.de/north-america/canada/quebec-latest.osm.pbf -e DOWNLOAD_POLY=https://download.geofabrik.de/north-america/canada/quebec.poly -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
 ```
 without network : 
 ```sh
-docker run -e THREADS=8 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -v /media/skydel/OSM/quebec-latest.osm.osm.pbf:/data/region.osm.pbf -v /media/skydel/OSM/quebec.poly:/data/region.poly -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
+docker run -e THREADS=8 -e "OSM2PGSQL_EXTRA_ARGS=-C 8192" -v /home/user/Downloads/quebec-latest.osm.osm.pbf:/data/region.osm.pbf -v /home/user/Downloads/quebec.poly:/data/region.poly -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ osm import
 ```
 
 # Modify Skydel config : 
+in order for the file server to work on client devices you need to update this configuration file on the clients.
+The IP should be the IP of the docker host machine.
 ```sh
 nano /usr/lib/skydel-sdx/data/maps/earth/openstreetmap/openstreetmap.dgml
 ```
@@ -82,18 +91,18 @@ nano /usr/lib/skydel-sdx/data/maps/earth/openstreetmap/openstreetmap.dgml
 
 ### With : 
 ```xml
-          <downloadUrl protocol="http" host="172.17.0.2" path="/tile/"/>
+          <downloadUrl protocol="http" host="192.168.1.##" path="/tile/"/>
 ```
 
 # Run Container :
 ```sh
-docker run -v osm-data:/data/database/ -e ALLOW_CORS=enabled -v osm-tiles:/data/tiles/ -d osm run
+docker run -p 80:80 -e ALLOW_CORS=enabled -v osm-data:/data/database/ -v osm-tiles:/data/tiles/ -d osm run
 ```
 
 # Start Skydel
 ### Open Preferences / Marble Proxy
 ### Configure as follow
-- Address: 172.17.0.2
+- Address: 192.168.1.##
 - Transport Protocol : Http
 - Port : 80
 
